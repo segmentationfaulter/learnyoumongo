@@ -5,10 +5,10 @@ var firstArg = +process.argv[2]
 
 client.connect(url, (err, db) => {
   assert.equal(err, null)
-  db.collection('parrots').find({age: {$gt: firstArg}}).toArray((err, docs) => {
+  db.collection('parrots').find({age: {$gt: firstArg}}, {name: 1, age: 1, _id: 0}).toArray((err, docs) => {
     assert.equal(err, null)
     console.log(docs)
-    db.close()  // this call must be made here, read the comment below
+    db.close()  // this call should be made here, read the comment below
   })
   // never close the db here, since the above method calls to db are asynchronous
   // and you may close the db connection before the above method calls are over
